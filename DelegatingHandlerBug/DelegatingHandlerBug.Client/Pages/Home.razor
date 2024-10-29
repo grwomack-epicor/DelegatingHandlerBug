@@ -17,8 +17,8 @@ Welcome to your new app.
         var client = _httpFactory.CreateClient("jsInteropHandler");
         await client.SendAsync(new HttpRequestMessage
         {
-            // Public API Test End Point
-            RequestUri = new Uri("https://catfact.ninja/fact"),
+            // fake url
+            RequestUri = new Uri("https://badrequest/bogusendpoint"),
             Method = HttpMethod.Get
         });
     }

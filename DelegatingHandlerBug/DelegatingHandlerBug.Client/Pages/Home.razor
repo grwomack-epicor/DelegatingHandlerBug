@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@code
+{
+    [Inject] private IJSRuntime _jsRuntime { get; set; }
+    [Inject] private IHttpClientFactory _httpFactory { get; set; }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await _jsRuntime.InvokeVoidAsync("alert", $"Hello from {nameof(OnAfterRender)} life cycle method");
+        var client = _httpFactory.CreateClient("jsInteropHandler");
+        await client.SendAsync(new HttpRequestMessage
+        {
+            // Public API Test End Point
+            RequestUri = new Uri("https://catfact.ninja/fact"),
+            Method = HttpMethod.Get
+        });
+    }
+}

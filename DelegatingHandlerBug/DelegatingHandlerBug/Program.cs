@@ -1,5 +1,4 @@
-using DelegatingHandlerBug.Client;
-using DelegatingHandlerBug.Client.Pages;
+using DelegatingHandlerBug;
 using DelegatingHandlerBug.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +9,11 @@ builder.Services.AddRazorComponents()
     .AddCircuitOptions(options => { options.DetailedErrors = true; })
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddScoped<JsInteropDelegatingHandler>();
+builder.Services.AddScoped<DelegatingHandlerBug.JsInteropDelegatingHandler>();
 builder.Services.AddHttpClient("jsInteropHandler")
-    .AddHttpMessageHandler<JsInteropDelegatingHandler>();
+    .AddHttpMessageHandler<DelegatingHandlerBug.JsInteropDelegatingHandler>();
+
+builder.Services.AddCircuitServicesAccessor();
 
 var app = builder.Build();
 
